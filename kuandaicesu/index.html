@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宽带测速软件 - 专业网络质量检测与带宽评估工具</title>
+    <meta name="description" content="提供专业、精准的宽带测速软件，支持测速、丢包率检测、延迟分析及网络诊断。帮助用户快速评估网络连接质量，优化上网体验。">
+    <meta name="keywords" content="宽带测速软件, 网络测速, 带宽测试, ping测试, 丢包率检测">
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #64748b;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #475569;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-sub);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+
+        .download-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-sub);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Speed Test Widget */
+        .speed-test-widget {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .test-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .test-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-size: 1.25rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: transform 0.1s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+        }
+
+        .test-btn:active {
+            transform: translateY(0);
+        }
+
+        .test-btn:disabled {
+            background-color: var(--secondary-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .result-display {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            text-align: center;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .result-display.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .result-item {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: var(--radius);
+        }
+
+        .result-label {
+            font-size: 0.875rem;
+            color: var(--text-sub);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .result-unit {
+            font-size: 1rem;
+            color: var(--text-sub);
+            font-weight: 400;
+        }
+
+        .progress-ring {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .progress-ring circle {
+            transition: stroke-dashoffset 0.1s linear;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .progress-bg {
+            stroke: var(--border-color);
+            stroke-width: 8;
+            fill: transparent;
+        }
+
+        .progress-bar {
+            stroke: var(--primary-color);
+            stroke-width: 8;
+            fill: transparent;
+            stroke-dasharray: 565.48;
+            stroke-dashoffset: 565.48;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-text h3 {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .progress-text span {
+            font-size: 1rem;
+            color: var(--text-sub);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--text-sub);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        /* Comparison Table */
+        .comparison-wrapper {
+            overflow-x: auto;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .cross-icon {
+            color: var(--text-sub);
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .faq-question:hover {
+            background-color: #f8fafc;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 20px;
+        }
+
+        .faq-answer p {
+            padding-bottom: 20px;
+            color: var(--text-sub);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background-color: #1e293b;
+            color: #94a3b8;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #334155;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                flex-direction: column;
+                height: auto;
+                padding: 16px 0;
+            }
+
+            nav ul {
+                margin: 16px 0;
+                gap: 16px;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .result-display {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .speed-test-widget {
+                padding: 24px;
+            }
+
+            .progress-ring {
+                width: 160px;
+                height: 160px;
+            }
+
+            .progress-text h3 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav-wrapper">
+        <a href="#" class="logo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+            NetSpeed Pro
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#features">功能特性</a></li>
+                <li><a href="#comparison">版本对比</a></li>
+                <li><a href="#faq">常见问题</a></li>
+            </ul>
+        </nav>
+        <a href="#" class="download-btn">下载客户端</a>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container">
+            <h1>精准的宽带测速软件</h1>
+            <p>一键检测网络上传、下载速度、延迟与抖动。为您的宽带服务提供权威评估，确保上网体验流畅稳定。</p>
+            
+            <div class="speed-test-widget">
+                <button id="startTest" class="test-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    开始测速
+                </button>
+                
+                <div class="progress-ring" id="progressRing" style="display: none;">
+                    <svg width="200" height="200">
+                        <circle class="progress-bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="progress-bar" cx="100" cy="100" r="90" id="progressBar"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <h3 id="currentSpeed">0.0</h3>
+                        <span>Mbps</span>
+                    </div>
+                </div>
+
+                <div class="result-display" id="resultDisplay">
+                    <div class="result-item">
+                        <div class="result-label">下载速度</div>
+                        <div class="result-value" id="downloadSpeed">--</div>
+                        <div class="result-unit">Mbps</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">上传速度</div>
+                        <div class="result-value" id="uploadSpeed">--</div>
+                        <div class="result-unit">Mbps</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-label">延迟 / Ping</div>
+                        <div class="result-value" id="pingSpeed">--</div>
+                        <div class="result-unit">ms</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心功能特性</h2>
+                <p>全方位的网络诊断工具，不仅测速，更懂网络</p>
+            </div>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M2 12h20"></path>
+                        </svg>
+                    </div>
+                    <h3>多维度测速</h3>
+                    <p>同时进行下载、上传、Ping值及丢包率测试，全面反映网络带宽质量与稳定性。</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M2 12h20"></path>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <h3>全球节点选择</h3>
+                    <p>内置全球高速测速服务器节点，智能选择最优线路，确保测试结果客观准确。</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <h3>网络质量诊断</h3>
+                    <p>自动分析网络瓶颈，提供优化建议。区分运营商问题、设备问题或线路干扰。</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>详细报告生成</h3>
+                    <p>测试完成后生成专业数据报告，支持保存截图与历史数据对比，便于投诉或咨询客服。</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="comparison" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>版本功能对比</h2>
+                <p>选择适合您的测速工具版本</p>
+            </div>
+            <div class="comparison-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>功能特性</th>
+                            <th>免费版</th>
+                            <th>专业版</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>基础下载测速</td>
+                            <td class="check-icon">✓</td>
+                            <td class="check-icon">✓</td>
+                        </tr>
+                        <tr>
+                            <td>上传速度测试</td>
+                            <td class="cross-icon">✕</td>
+                            <td class="check-icon">✓</td>
+                        </tr>
+                        <tr>
+                            <td>Ping & 丢包率检测</td>
+                            <td class="check-icon">✓</td>
+                            <td class="check-icon">✓</td>
+                        </tr>
+                        <tr>
+                            <td>全球节点选择</td>
+                            <td class="cross-icon">✕</td>
+                            <td class="check-icon">✓</td>
+                        </tr>
+                        <tr>
+                            <td>详细历史记录</td>
+                            <td class="cross-icon">✕</td>
+                            <td class="check-icon">✓</td>
+                        </tr>
+                        <tr>
+                            <td>网络诊断报告</td>
+                            <td class="cross-icon">✕</td>
+                            <td class="check-icon">✓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>常见问题解答</h2>
+                <p>关于宽带测速的疑问解答</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        为什么测速结果低于运营商承诺的宽带速度？
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>测速结果受多种因素影响，包括物理距离、当前网络负载、Wi-Fi信号干扰、路由器性能以及测速服务器距离。建议在测速时关闭其他设备，使用有线连接，并选择距离较近的测速节点。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Ping值高说明网络有问题吗？
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Ping值（延迟）高通常意味着数据包传输延迟较大。对于网页浏览和看视频，几十毫秒的延迟通常可以接受。但如果Ping值持续高于100ms，可能会导致游戏卡顿或视频加载缓慢。</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        上传速度和下载速度一样重要吗？
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>这取决于您的使用场景。如果您主要进行浏览、观看在线视频，下载速度更为关键。但如果您经常上传大文件（如视频剪辑、云备份），或者玩需要大量数据上传的实时对战游戏，上传速度同样重要。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>NetSpeed Pro</h4>
+                <p>致力于提供最专业、最直观的网络质量检测服务，帮助用户维护健康的网络环境。</p>
+            </div>
+            <div class="footer-col">
+                <h4>产品</h4>
+                <ul>
+                    <li><a href="#">免费版下载</a></li>
+                    <li><a href="#">专业版升级</a></li>
+                    <li><a href="#">API接口文档</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>支持</h4>
+                <ul>
+                    <li><a href="#">帮助中心</a></li>
+                    <li><a href="#">联系客服</a></li>
+                    <li><a href="#">网络诊断指南</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关于</h4>
+                <ul>
+                    <li><a href="#">公司介绍</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2023 NetSpeed Pro. All rights reserved. 本软件仅供技术评估参考。
+        </div>
+    </div>
+</footer>
+
+<script>
+    // FAQ Toggle Logic
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all other items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Toggle current item
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        });
+    });
+
+    // Mock Speed Test Logic (Visual Simulation)
+    const startBtn = document.getElementById('startTest');
+    const progressRing = document.getElementById('progressRing');
+    const progressBar = document.getElementById('progressBar');
+    const currentSpeedDisplay = document.getElementById('currentSpeed');
+    const resultDisplay = document.getElementById('resultDisplay');
+    
+    const downloadEl = document.getElementById('downloadSpeed');
+    const uploadEl = document.getElementById('uploadSpeed');
+    const pingEl = document.getElementById('pingSpeed');
+
+    let isTesting = false;
+
+    startBtn.addEventListener('click', () => {
+        if (isTesting) return;
+        isTesting = true;
+        
+        // UI Reset
+        startBtn.disabled = true;
+        startBtn.innerHTML = '正在测速...';
+        resultDisplay.classList.remove('active');
+        progressRing.style.display = 'block';
+        
+        // Reset values
+        progressBar.style.strokeDashoffset = 565.48;
+        currentSpeedDisplay.textContent = '0.0';
+        
+        // Simulation sequence
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += Math.random() * 5;
+            if (progress > 100) progress = 100;
+            
+            // Animate Ring
+            const offset = 565.48 - (565.48 * progress / 100);
+            progressBar.style.strokeDashoffset = offset;
+            
+            // Animate Speed Number (Fake realistic fluctuation)
+            const fakeSpeed = (Math.random() * 10 + 20).toFixed(1);
+            currentSpeedDisplay.textContent = fakeSpeed;
+            
+            if (progress === 100) {
+                clearInterval(interval);
+                finishTest();
+            }
+        }, 100);
+    });
+
+    function finishTest() {
+        // Final Results (Mock Data)
+        const finalDownload = (Math.random() * 50 + 150).toFixed(1); // 150-200 Mbps
+        const finalUpload = (Math.random() * 10 + 40).toFixed(1);   // 40-50 Mbps
+        const finalPing = Math.floor(Math.random() * 20 + 5);       // 5-25 ms
+        
+        setTimeout(() => {
+            currentSpeedDisplay.textContent = finalDownload;
+            resultDisplay.classList.add('active');
+            
+            // Animate numbers
+            animateValue(downloadEl, 0, parseFloat(finalDownload), 1000);
+            animateValue(uploadEl, 0, parseFloat(finalUpload), 1000);
+            animateValue(pingEl, 0, finalPing, 500);
+            
+            // Reset Button
+            startBtn.disabled = false;
+            startBtn.innerHTML = `
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 4v6h-6"></path>
+                    <path d="M1 20v-6h6"></path>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+                重新测速
+            `;
+            
+            // Confetti effect (Simple CSS/JS visual cue)
+            progressRing.style.stroke = '#10b981';
+            setTimeout(() => {
+                progressRing.style.stroke = '#2563eb';
+            }, 1000);
+            
+            isTesting = false;
+        }, 500);
+    }
+
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = (progress * (end - start) + start).toFixed(1);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+</script>
+
+</body>
+  </html>
