@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="暗黑装备 - 深度探索暗黑风格装备系统、游戏机制解析与数值攻略。提供职业搭配、装备获取途径及PVE/PVP实战评测。">
+    <meta name="keywords" content="暗黑装备, 暗黑风格, 游戏装备攻略, 暗黑游戏机制, 职业搭配">
+    <title>暗黑装备-暗黑风格装备系统解析与实战攻略</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --bg-dark: #0f0f13;
+            --bg-card: #1a1a20;
+            --bg-card-hover: #25252e;
+            --accent-gold: #c9a227;
+            --accent-red: #e63946;
+            --text-main: #e0e0e0;
+            --text-muted: #9494a0;
+            --border-color: #333340;
+            --font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(15, 15, 19, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--text-main);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-gold);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-gold), #b8860b);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(15, 15, 19, 0.95), rgba(15, 15, 19, 0.7)), 
+                        url('https://picsum.photos/seed/darkgear/1920/1080') no-repeat center center/cover;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .hero h1 span {
+            color: var(--accent-gold);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        /* Section Titles */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .view-all {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Featured Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border-color: var(--accent-gold);
+        }
+
+        .card-img-wrapper {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-red);
+            color: #fff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-tag {
+            color: var(--accent-gold);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Guide Section */
+        .guide-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .guide-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .guide-item {
+            display: flex;
+            gap: 20px;
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .guide-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(201, 162, 39, 0.1);
+            color: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .guide-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .guide-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-widget {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 10px;
+        }
+
+        .tier-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tier-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tier-rank {
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .tier-item.S .tier-rank { background-color: var(--accent-red); color: white; }
+        .tier-item.A .tier-rank { background-color: var(--accent-gold); color: black; }
+        .tier-item.B .tier-rank { background-color: #555; color: white; }
+
+        .tier-name {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background-color: var(--bg-card);
+            padding: 50px 0;
+            margin-bottom: 60px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            background-color: rgba(255,255,255,0.02);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 200px;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--accent-gold);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050507;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--text-main);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                height: 400px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .guide-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-widget {
+                position: static;
+                order: -1;
+                margin-bottom: 30px;
+            }
+            nav ul {
+                display: none;
+            }
+            .header-inner {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <span>⚔️</span> 暗黑装备
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">装备图鉴</a></li>
+                    <li><a href="#">流派攻略</a></li>
+                    <li><a href="#">版本更新</a></li>
+                    <li><a href="#">社区讨论</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="#" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1>重塑你的 <span>暗黑装备</span> 架构</h1>
+                    <p>深入解析当前版本最强暗黑风格装备属性、词缀搭配与实战评测。从零构建无敌流派，掌握核心机制。</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#" class="btn btn-primary">开始构建</a>
+                        <a href="#" class="btn btn-outline">查看榜单</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <!-- Featured Section -->
+            <section class="section-header">
+                <div class="section-title">
+                    <h2>热门装备推荐</h2>
+                    <p>当前版本最受玩家追捧的暗黑装备解析</p>
+                </div>
+                <a href="#" class="view-all">查看全部 &rarr;</a>
+            </section>
+
+            <div class="grid-container">
+                <!-- Card 1 -->
+                <article class="card">
+                    <div class="card-img-wrapper">
+                        <span class="card-badge">T0</span>
+                        <img src="https://picsum.photos/seed/dark1/400/300" alt="虚空之刃" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag">武器</div>
+                        <h3>虚空之刃：湮灭形态</h3>
+                        <p>高攻速触发流血效果，适合狂战士与刺客职业。核心词缀为“攻击时附加生命值上限的暗影伤害”。</p>
+                        <div class="card-stats">
+                            <span class="stat-item">🔥 2.4w 阅读</span>
+                            <span class="stat-item">⭐ 9.8 评分</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="card">
+                    <div class="card-img-wrapper">
+                        <span class="card-badge">T1</span>
+                        <img src="https://picsum.photos/seed/dark2/400/300" alt="暗影斗篷" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag">护甲</div>
+                        <h3>虚空行者斗篷</h3>
+                        <p>提供极高的闪避率与暗影抗性。被动技能“暗影步”允许在击杀敌人后瞬间刷新冷却时间。</p>
+                        <div class="card-stats">
+                            <span class="stat-item">🔥 1.8w 阅读</span>
+                            <span class="stat-item">⭐ 9.2 评分</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="card">
+                    <div class="card-img-wrapper">
+                        <span class="card-badge">新</span>
+                        <img src="https://picsum.photos/seed/dark3/400/300" alt="魂灯" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag">饰品</div>
+                        <h3>远古魂灯</h3>
+                        <p>收集灵魂碎片可转化为攻击力。在Boss战中有几率触发“灵魂爆发”造成全屏伤害。</p>
+                        <div class="card-stats">
+                            <span class="stat-item">🔥 9.5k 阅读</span>
+                            <span class="stat-item">⭐ 8.9 评分</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="card">
+                    <div class="card-img-wrapper">
+                        <span class="card-badge">T2</span>
+                        <img src="https://picsum.photos/seed/dark4/400/300" alt="血誓戒指" class="card-img">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag">戒指</div>
+                        <h3>血誓之戒</h3>
+                        <p>与生命值挂钩的攻击力加成。使用吸血技能时，可额外返还一定比例的法力值。</p>
+                        <div class="card-stats">
+                            <span class="stat-item">🔥 5.2k 阅读</span>
+                            <span class="stat-item">⭐ 8.5 评分</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Guide & Sidebar Section -->
+            <div class="guide-layout">
+                <div class="guide-content">
+                    <div class="section-header" style="margin-bottom: 20px; border: none;">
+                        <div class="section-title">
+                            <h2>装备构建指南</h2>
+                            <p>针对不同玩法的装备搭配建议</p>
+                        </div>
+                    </div>
+
+                    <div class="guide-list">
+                        <div class="guide-item">
+                            <div class="guide-icon">⚔️</div>
+                            <div class="guide-content">
+                                <h3>狂暴流：极致输出</h3>
+                                <p>核心思路是堆叠攻击速度与暴击率。推荐使用“虚空之刃”搭配“狂暴胸甲”，通过高频攻击触发流血效果，在短时间内打出爆炸伤害。</p>
+                            </div>
+                        </div>
+
+                        <div class="guide-item">
+                            <div class="guide-icon">🛡️</div>
+                            <div class="guide-content">
+                                <h3>坦克流：生存续航</h3>
+                                <p>侧重于生命值上限与暗影抗性。装备选择“虚空行者斗篷”与“血誓戒指”，利用技能吸血特性，在团战中充当前排肉盾。</p>
+                            </div>
+                        </div>
+
+                        <div class="guide-item">
+                            <div class="guide-icon">🔮</div>
+                            <div class="guide-content">
+                                <h3>控制流：战术压制</h3>
+                                <p>利用“远古魂灯”提供的控制时间延长，配合减速装备，限制敌方走位。适合在竞技场中掌控节奏。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside>
+                    <div class="sidebar-widget">
+                        <h3>装备强度榜</h3>
+                        <div class="tier-list">
+                            <div class="tier-item S">
+                                <div class="tier-rank">S</div>
+                                <div class="tier-name">虚空之刃</div>
+                            </div>
+                            <div class="tier-item S">
+                                <div class="tier-rank">S</div>
+                                <div class="tier-name">深渊之心</div>
+                            </div>
+                            <div class="tier-item A">
+                                <div class="tier-rank">A</div>
+                                <div class="tier-name">暗影斗篷</div>
+                            </div>
+                            <div class="tier-item A">
+                                <div class="tier-rank">A</div>
+                                <div class="tier-name">龙骨护手</div>
+                            </div>
+                            <div class="tier-item B">
+                                <div class="tier-rank">B</div>
+                                <div class="tier-name">新手木剑</div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <div class="container faq-container">
+                    <div class="section-header" style="border: none; margin-bottom: 30px;">
+                        <div class="section-title">
+                            <h2>常见问题解答</h2>
+                            <p>关于暗黑装备系统的常见疑问</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">暗黑装备如何获取最高等级？</div>
+                        <div class="faq-answer">
+                            暗黑装备的等级通常与玩家的角色等级或通关的副本难度挂钩。通过挑战深渊模式或参与限时活动，可以获得强化材料，提升装备的稀有度。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">不同职业的暗黑装备通用吗？</div>
+                        <div class="faq-answer">
+                            大部分基础暗黑装备是通用的，但核心组件（如武器、头盔）通常有职业专属的词缀加成。建议根据职业特性选择特定的装备模板。
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">装备强化失败会降级吗？</div>
+                        <div class="faq-answer">
+                            是的，在目前的版本机制中，暗黑装备强化存在一定概率失败。失败可能会导致装备等级下降或损坏。建议在强化前准备好保护符文。
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <span>⚔️</span> 暗黑装备
+                    </div>
+                    <p style="color: #666; font-size: 0.9rem;">
+                        专注为玩家提供最全面、最及时的暗黑风格游戏装备攻略与数据分析平台。
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>攻略分类</h4>
+                    <ul>
+                        <li><a href="#">新手入门</a></li>
+                        <li><a href="#">副本解析</a></li>
+                        <li><a href="#">装备图鉴</a></li>
+                        <li><a href="#">PVP竞技</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>相关资源</h4>
+                    <ul>
+                        <li><a href="#">版本更新日志</a></li>
+                        <li><a href="#">开发者工具</a></li>
+                        <li><a href="#">社区论坛</a></li>
+                        <li><a href="#">联系客服</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#">微信公众号</a></li>
+                        <li><a href="#">官方微博</a></li>
+                        <li><a href="#">Discord 社区</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 暗黑装备攻略网. All rights reserved. 本站内容仅供学习参考。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                question.addEventListener('click', () => {
+                    // Close other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
