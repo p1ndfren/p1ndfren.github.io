@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英雄联盟美服下载-官方客户端安装与账号注册指南</title>
+    <meta name="description" content="提供英雄联盟美服官方下载指引，包含客户端安装步骤、地区账号注册教程、网络加速配置及常见问题解答，帮助玩家安全快速进入美服游戏。">
+    <meta name="keywords" content="英雄联盟美服下载,英雄联盟美服客户端,LoL美服,美服LOL下载,美服账号注册">
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #00a8ff;
+            --secondary-color: #1e3799;
+            --accent-color: #fbc531;
+            --text-dark: #2f3640;
+            --text-light: #f5f6fa;
+            --bg-light: #f1f2f6;
+            --bg-white: #ffffff;
+            --border-radius: 8px;
+            --container-width: 1200px;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 168, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        nav a.active {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            background-image: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-btn {
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-btn:hover {
+            background-color: #e1b12c;
+            transform: translateY(-2px);
+        }
+
+        /* Main Layout */
+        .main-wrapper {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Section Styling */
+        .section-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Download Steps */
+        .steps-list {
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .step-item::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .step-content h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .code-box {
+            background-color: #2f3640;
+            color: #00ff9d;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: monospace;
+            margin-top: 1rem;
+            display: inline-block;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Account Guide */
+        .account-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .info-text h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-text p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid var(--bg-light);
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            color: #666;
+            font-size: 0.95rem;
+            display: none;
+            margin-top: 0.5rem;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2f3640;
+            color: #a4b0be;
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-wrapper nav {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            }
+
+            .nav-wrapper nav.active {
+                display: flex;
+            }
+
+            .nav-wrapper nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav-wrapper">
+        <a href="#" class="logo">
+            <span>League</span>Connect
+        </a>
+        <button class="mobile-menu-btn" aria-label="菜单">☰</button>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">首页</a></li>
+                <li><a href="#download">下载指南</a></li>
+                <li><a href="#account">账号注册</a></li>
+                <li><a href="#network">网络加速</a></li>
+                <li><a href="#faq">常见问题</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container hero-content">
+        <h1>英雄联盟美服下载与体验指南</h1>
+        <p>获取最新版本的《League of Legends》客户端，开启全球竞技之旅。本站提供官方下载指引、地区账号注册教程及网络优化方案。</p>
+        <div class="hero-buttons">
+            <a href="#download" class="btn hero-btn">立即下载客户端</a>
+            <a href="#account" class="btn btn-outline" style="border-color: white; color: white;">查看账号注册</a>
+        </div>
+    </div>
+</section>
+
+<main class="container main-wrapper">
+    <div class="grid-layout">
+        <!-- Left Column: Content -->
+        <div class="content-column">
+            
+            <!-- Download Guide -->
+            <section id="download" class="section-card">
+                <h2 class="section-title">英雄联盟美服下载步骤</h2>
+                <p style="margin-bottom: 2rem; color: #666;">以下步骤适用于 Windows 10/11 操作系统。请确保网络环境稳定，建议使用 64 位浏览器访问。</p>
+                
+                <div class="steps-list">
+                    <div class="step-item">
+                        <div class="step-content">
+                            <h3>1. 访问官方站点</h3>
+                            <p>点击下方按钮或访问 <a href="#" style="color: var(--primary-color);">leagueoflegends.com</a> 官方网站。在页面底部找到 "Download" 下载按钮。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-content">
+                            <h3>2. 选择安装包</h3>
+                            <p>在下载页面，选择 <strong>League of Legends Launcher</strong> 安装包。文件大小通常在 1GB 左右，下载速度取决于您的网络环境。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-content">
+                            <h3>3. 运行安装程序</h3>
+                            <p>下载完成后，双击运行安装程序。在安装向导中，您可以选择安装路径。建议不要安装在系统盘（C盘）以避免空间不足。</p>
+                        </div>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-content">
+                            <h3>4. 启动游戏</h3>
+                            <p>安装完成后，桌面会生成快捷方式。点击运行，游戏会自动更新至最新版本。首次启动可能需要较长时间，请耐心等待。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Network Optimization -->
+            <section id="network" class="section-card">
+                <h2 class="section-title">网络环境配置建议</h2>
+                <p style="margin-bottom: 1.5rem; color: #666;">由于服务器位于美国，国内玩家直连可能会遇到延迟高、丢包或无法连接的情况。建议采取以下措施：</p>
+                
+                <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <li style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--primary-color);">✓</span> 使用支持美服节点的游戏加速器
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--primary-color);">✓</span> 关闭局域网中的防火墙或安全软件
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--primary-color);">✓</span> 使用 Chrome 或 Edge 浏览器下载
+                    </li>
+                    <li style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--primary-color);">✓</span> 重启路由器以刷新网络连接
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Account Registration -->
+            <section id="account" class="section-card">
+                <h2 class="section-title">美服账号注册指南</h2>
+                <div class="account-info">
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-text">
+                            <h4>电子邮箱要求</h4>
+                            <p>注册时需准备一个有效的国际电子邮箱（如 Gmail, Outlook, Yahoo）。邮箱地址将用于找回密码和接收验证码。</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">🛡️</div>
+                        <div class="info-text">
+                            <h4>密码设置规范</h4>
+                            <p>密码长度建议超过 8 位，并包含大小写字母、数字及特殊符号。请勿使用与其他网站相同的密码。</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📅</div>
+                        <div class="info-text">
+                            <h4>年龄验证</h4>
+                            <p>美服要求用户必须年满 13 周岁才能注册。注册过程中需填写出生日期，请确保信息准确。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Right Column: Sidebar -->
+        <aside class="sidebar-column">
+            
+            <!-- Quick Download Box -->
+            <div class="section-card" style="background: linear-gradient(135deg, #1e3799, #4a69bd); color: white;">
+                <h3 style="margin-bottom: 1rem;">快速通道</h3>
+                <p style="margin-bottom: 1.5rem; font-size: 0.9rem; opacity: 0.9;">获取最新版客户端，立即开始游戏。</p>
+                <a href="#" class="btn hero-btn" style="width: 100%; justify-content: center; background-color: white; color: var(--secondary-color);">
+                    下载客户端
+                </a>
+                <div style="margin-top: 1rem; font-size: 0.8rem; opacity: 0.8;">
+                    支持 Windows 10/11 64位
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div id="faq" class="section-card">
+                <h2 class="section-title">常见问题 (FAQ)</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">美服和亚服有什么区别？</div>
+                    <div class="faq-answer">美服（NA）主要面向北美地区玩家，游戏版本更新通常与韩服同步，节奏较快，适合追求高强度的竞技体验。</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">下载速度很慢怎么办？</div>
+                    <div class="faq-answer">请检查您的网络连接。如果直连官方服务器速度慢，建议使用专业的游戏加速工具连接到美国节点。</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">账号注册时提示地区限制怎么办？</div>
+                    <div class="faq-answer">确保您使用的 IP 地址与您填写的注册地区相符。如果使用加速器，请开启“浏览器加速”或“免拔号加速”模式。</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">游戏内闪退或报错如何解决？</div>
+                    <div class="faq-answer">请尝试更新显卡驱动，关闭后台运行的其他程序，并检查游戏文件完整性。如果是网络问题，请重启加速器。</div>
+                </div>
+
+            </div>
+
+            <!-- Info Card -->
+            <div class="section-card">
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">安全提示</h3>
+                <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">
+                    请勿在非官方网站输入账号密码。本站仅提供下载指引，所有账号操作均在 Riot 官方页面完成。
+                </p>
+            </div>
+
+        </aside>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 1rem;">
+                    <span>League</span>Connect
+                </div>
+                <p style="font-size: 0.9rem; opacity: 0.8;">
+                    致力于为玩家提供最便捷的游戏下载与资讯服务。本站与 Riot Games 无关。
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">客户端下载</a></li>
+                    <li><a href="#">账号注册教程</a></li>
+                    <li><a href="#">社区论坛</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>支持</h4>
+                <ul>
+                    <li><a href="#">帮助中心</a></li>
+                    <li><a href="#">网络故障排查</a></li>
+                    <li><a href="#">联系客服</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关于</h4>
+                <ul>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 LeagueConnect Guide. All rights reserved. 本站为玩家社区资源导航。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile Menu Toggle
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('nav');
+    
+    menuBtn.addEventListener('click', () => {
+        nav.classList.toggle('active');
+    });
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            // Close other items
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            // Toggle current item
+            item.classList.toggle('active');
+        });
+    });
+
+    // Smooth Scroll for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Close mobile menu if open
+                nav.classList.remove('active');
+                
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
